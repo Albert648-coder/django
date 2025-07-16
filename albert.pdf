@@ -1,0 +1,50 @@
+# Replace checkmarks and any remaining non-ASCII characters
+tips = [tip.replace("✔", "-") for tip in tips]
+
+# Rebuild the PDF one last time
+pdf = FPDF()
+pdf.add_page()
+pdf.set_auto_page_break(auto=True, margin=15)
+pdf.set_font("Arial", size=12)
+
+# Title
+pdf.set_font("Arial", 'B', 16)
+pdf.cell(0, 10, "45-Day IELTS Study Plan", ln=True, align="C")
+pdf.set_font("Arial", size=12)
+pdf.ln(10)
+
+# Intro
+pdf.multi_cell(0, 10, intro_text)
+pdf.ln(5)
+
+# Study blocks
+pdf.set_font("Arial", 'B', 14)
+pdf.cell(0, 10, "Daily Study Plan (5 Hours)", ln=True)
+pdf.set_font("Arial", size=12)
+for title, desc in study_blocks:
+    pdf.cell(0, 10, f"- {title}", ln=True)
+    pdf.set_text_color(100, 100, 100)
+    pdf.multi_cell(0, 8, f"  {desc}")
+    pdf.set_text_color(0, 0, 0)
+
+pdf.ln(5)
+
+# Week Breakdown
+pdf.set_font("Arial", 'B', 14)
+pdf.cell(0, 10, "Weekly Focus", ln=True)
+pdf.set_font("Arial", size=12)
+for week in weekly_focus:
+    pdf.multi_cell(0, 8, f"- {week}")
+
+pdf.ln(5)
+
+# Final tips
+pdf.set_font("Arial", 'B', 14)
+pdf.cell(0, 10, "Final Tips", ln=True)
+pdf.set_font("Arial", size=12)
+for tip in tips:
+    pdf.cell(0, 10, tip, ln=True)
+
+# Save final version
+pdf_path = "/mnt/data/IELTS_45_Day_Study_Plan.pdf"
+pdf.output(pdf_path)
