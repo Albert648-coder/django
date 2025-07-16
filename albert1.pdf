@@ -1,0 +1,83 @@
+from fpdf import PDF
+from datetime import datetime, timedelta
+
+# Initialize PDF
+pdf = FPDF()
+pdf.add_page()
+pdf.set_auto_page_break(auto=True, margin=15)
+pdf.set_font("Arial", size=12)
+
+# Title
+pdf.set_font("Arial", 'B', 16)
+pdf.cell(0, 10, "45-Day IELTS Study Plan", ln=True, align="C")
+pdf.set_font("Arial", size=12)
+pdf.ln(10)
+
+# Intro
+intro_text = """
+This 45-day IELTS study plan is designed for a target overall band score of 7.5 with the following goals:
+- Listening: 8.5
+- Reading: 7.0
+- Writing: 7.5
+- Speaking: 7.0
+
+You have 5 hours per day to study. This plan includes a daily schedule of tasks to improve all four skills, with an emphasis on Listening and Writing.
+"""
+pdf.multi_cell(0, 10, intro_text)
+pdf.ln(5)
+
+# Study blocks
+study_blocks = [
+    ("Listening Practice (1 hr)", "Use Cambridge IELTS books + transcripts. Watch TED Talks or BBC podcasts on Spotify."),
+    ("Reading Practice (1 hr)", "Do 2 reading passages daily from Cambridge IELTS books. Review all mistakes."),
+    ("Writing Task 1 or 2 (1 hr)", "Write 1 task daily. Alternate between Task 1 and Task 2. Use model answers to compare."),
+    ("Speaking Practice (1 hr)", "Practice Part 2 and Part 3 with a partner or record yourself. Use cue cards and IELTS Speaking samples."),
+    ("Review + Vocabulary (1 hr)", "Revise errors from Listening/Reading. Learn 15–20 academic words/day with examples.")
+]
+
+# Add blocks
+pdf.set_font("Arial", 'B', 14)
+pdf.cell(0, 10, "Daily Study Plan (5 Hours)", ln=True)
+pdf.set_font("Arial", size=12)
+for title, desc in study_blocks:
+    pdf.cell(0, 10, f"- {title}", ln=True)
+    pdf.set_text_color(100, 100, 100)
+    pdf.multi_cell(0, 8, f"  {desc}")
+    pdf.set_text_color(0, 0, 0)
+
+pdf.ln(5)
+
+# Week Breakdown
+pdf.set_font("Arial", 'B', 14)
+pdf.cell(0, 10, "Weekly Focus", ln=True)
+pdf.set_font("Arial", size=12)
+
+weekly_focus = [
+    "Days 1–7: Build foundation. Focus on identifying weak areas. Do diagnostic tests.",
+    "Days 8–21: Strengthen skills. Do full practice tests every 3rd day.",
+    "Days 22–35: Refine strategy. Focus on timing, writing templates, speaking fluency.",
+    "Days 36–45: Final practice. Take 3 full mock tests under exam conditions. Review all errors."
+]
+
+for week in weekly_focus:
+    pdf.multi_cell(0, 8, f"- {week}")
+
+pdf.ln(5)
+
+# Final tips
+pdf.set_font("Arial", 'B', 14)
+pdf.cell(0, 10, "Final Tips", ln=True)
+pdf.set_font("Arial", size=12)
+tips = [
+    "✔ Practice with a timer daily.",
+    "✔ Record yourself speaking and analyze fluency and coherence.",
+    "✔ Review your mistakes deeply, not just the correct answers.",
+    "✔ Use official Cambridge IELTS books (1–18).",
+    "✔ Get feedback on your writing (from a tutor or online services)."
+]
+for tip in tips:
+    pdf.cell(0, 10, tip, ln=True)
+
+# Save PDF
+pdf_path = "/mnt/data/IELTS_45_Day_Study_Plan.pdf"
+pdf.output(pdf_path)
